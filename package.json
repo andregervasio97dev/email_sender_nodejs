@@ -5,7 +5,7 @@
     "main": "./src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node --env-file=.env.local ./src/index.js",
+        "start": "npm run pm2-start",
         "pm2-start": "npx pm2 start ecosystem.config.js",
         "pm2-stop": "npx pm2 stop ./src/index.js",
         "pm2-delete": "npx pm2 delete ./src/index.js"
