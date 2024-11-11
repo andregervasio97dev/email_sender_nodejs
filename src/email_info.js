@@ -8,6 +8,7 @@ module.exports = class EmailInfo {
     subject;
     html;
     attachments;
+    errorMessages;
 
     constructor(requestBody) {
         this.from = requestBody.remetente;
@@ -22,21 +23,20 @@ module.exports = class EmailInfo {
     createAttachments(requestAttachments) {
         if (requestAttachments != "" && requestAttachments) {
             const anexosArray = requestAttachments.split(",");
+            this.errorMessages = "";
 
             // Makes attachments an array of maps returned by the arrow function
             const attachments = anexosArray.map((item) => {
-                let errorHappened = false;
                 let attachment = item.trim();
-                fs.access(attachment, fs.constants.F_OK, (error) => {
-                    if (error) {
-                        console.error(error.message);
-                        errorHappened = true;
-                    }
-                });
-                if (!errorHappened) {
+                try {
+                    fs.accessSync(attachment, fs.constants.F_OK);
                     return {
                         path: attachment,
                     };
+                } catch (error) {
+                    console.error(error.message);
+                    this.errorMessages +=
+                        "File " + attachment + " not found \n";
                 }
             });
             return attachments;
