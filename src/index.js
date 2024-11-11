@@ -35,12 +35,12 @@ function emailSend(body, response) {
 
         const emailInfo = new EmailInfo(body);
         if (emailInfo.errorMessages == "") {
-            new EmailPublisher().sendEmail(response, emailInfo);
-        } else {
-            console.error({ errorMessages: emailInfo.errorMessages });
-            response.status(500);
-            response.send({ errorMessages: emailInfo.errorMessages });
+            return new EmailPublisher().sendEmail(response, emailInfo);
         }
+
+        console.error({ errorMessages: emailInfo.errorMessages });
+        response.status(500);
+        response.send({ errorMessages: emailInfo.errorMessages });
     } catch (error) {
         console.error("Error ", error.message);
         // Returns error on JSON response
