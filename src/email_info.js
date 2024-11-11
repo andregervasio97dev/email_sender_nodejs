@@ -1,4 +1,4 @@
-export class EmailInfo {
+module.exports = class EmailInfo {
     from;
     to;
     cc;
@@ -30,4 +30,4 @@ export class EmailInfo {
             return attachments;
         }
     }
-}
+};
