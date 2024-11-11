@@ -33,7 +33,7 @@ function emailSend(body, response) {
     try {
         mandatoryFieldsValidator(body);
 
-        const emailInfo = new EmailInfo(request.body);
+        const emailInfo = new EmailInfo(body);
         new EmailPublisher().sendEmail(response, emailInfo);
     } catch (error) {
         console.log("Error ", error.message);
