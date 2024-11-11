@@ -30,7 +30,7 @@ module.exports = class EmailInfo {
                 fs.access(attachment, fs.constants.F_OK, (error) => {
                     if (error) {
                         console.error(error.message);
-                        error = true;
+                        errorHappened = true;
                     }
                 });
                 if (!errorHappened) {
