@@ -1,12 +1,13 @@
-import express, { json } from "express";
-import { EmailInfo } from "./email_info.js";
-import { EmailPublisher } from "./email_publisher.js";
+const express = require("express");
+const EmailInfo = require("./email_info.js");
+const EmailPublisher = require("./email_publisher.js");
 const app = express();
-app.use(json());
+app.use(express.json());
+
 const appPort = process.env.APP_PORT;
 
 // Endpoint for monitoring
-app.get("/", (request, response) => {
+app.get("/", (_request, response) => {
     console.log("Email sender running normally");
     response.status(200);
     response.json({ status: "email sender running normally" });
@@ -17,10 +18,7 @@ app.post("/send_email", (request, response) => {
     console.log("Received post request");
 
     // Data check
-    validateBody(request.body);
-
-    const emailInfo = new EmailInfo(request.body);
-    new EmailPublisher().sendEmail(response, emailInfo);
+    emailSend(request.body, response);
 
     console.log("Finished post request");
     console.timeEnd("elapsedTimeSendEmail");
@@ -30,16 +28,18 @@ app.listen(appPort, () => {
     console.log(`Email sender open. Listening on port ${appPort} \n`);
 });
 
-function validateBody(body) {
+function emailSend(body, response) {
     // Data check
     try {
         mandatoryFieldsValidator(body);
+
+        const emailInfo = new EmailInfo(request.body);
+        new EmailPublisher().sendEmail(response, emailInfo);
     } catch (error) {
         console.log("Error ", error.message);
         // Returns error on JSON response
         response.status(400);
         response.send({ errorMessage: error.message });
-        console.timeEnd("elapsedTimeSendEmail");
         return;
     }
 }

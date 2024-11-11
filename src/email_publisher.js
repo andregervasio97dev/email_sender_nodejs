@@ -1,7 +1,7 @@
-import { createTransport } from "nodemailer";
+const nodemailer = require("nodemailer");
 
-export class EmailPublisher {
-    transporter = createTransport({
+module.exports = class EmailPublisher {
+    transporter = nodemailer.createTransport({
         host: process.env.HOST,
         port: process.env.SMTP_PORT,
         secure: false,
@@ -26,4 +26,4 @@ export class EmailPublisher {
             }
         });
     }
-}
+};
