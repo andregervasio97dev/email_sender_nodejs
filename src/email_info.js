@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 module.exports = class EmailInfo {
     from;
     to;
@@ -23,9 +25,19 @@ module.exports = class EmailInfo {
 
             // Makes attachments an array of maps returned by the arrow function
             const attachments = anexosArray.map((item) => {
-                return {
-                    path: item,
-                };
+                let errorHappened = false;
+                let attachment = item.trim();
+                fs.access(attachment, fs.constants.F_OK, (error) => {
+                    if (error) {
+                        console.error(error.message);
+                        error = true;
+                    }
+                });
+                if (!errorHappened) {
+                    return {
+                        path: attachment,
+                    };
+                }
             });
             return attachments;
         }

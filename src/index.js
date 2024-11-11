@@ -36,7 +36,7 @@ function emailSend(body, response) {
         const emailInfo = new EmailInfo(body);
         new EmailPublisher().sendEmail(response, emailInfo);
     } catch (error) {
-        console.log("Error ", error.message);
+        console.error("Error ", error.message);
         // Returns error on JSON response
         response.status(400);
         response.send({ errorMessage: error.message });

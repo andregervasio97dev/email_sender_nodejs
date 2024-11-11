@@ -14,15 +14,15 @@ module.exports = class EmailPublisher {
     sendEmail(response, emailInfo) {
         this.transporter.sendMail(emailInfo, function (error, info) {
             if (error) {
-                console.log("Error ", error);
+                console.error("Error ", error.message);
                 // Returns error on JSON response
                 response.status(500);
-                response.send({ error });
+                response.send({ errorMessage: error.message });
             } else {
                 console.log("Email sent ", info.response);
                 // Returns information on JSON response
                 response.status(200);
-                response.send({ info });
+                response.send({ response: info });
             }
         });
     }
