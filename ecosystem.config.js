@@ -4,6 +4,9 @@ module.exports = {
             name: "email_sender_nodejs",
             script: "./src/index.js",
             watch: false,
+            time: true,
+            error_file: "./logs/error.log",
+            out_file: "./logs/output.log",
             env: {
                 APP_PORT: 8080,
                 USER: "project.1",
