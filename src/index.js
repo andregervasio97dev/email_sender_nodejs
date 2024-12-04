@@ -8,19 +8,22 @@ const appPort = process.env.APP_PORT;
 
 // Endpoint for monitoring
 app.get("/", (_request, response) => {
-    console.log("Email sender running normally");
     response.status(200);
+
+    console.log({
+        message: "Email sender running normally",
+        status: response.statusCode,
+    });
+
     response.json({ status: "email sender running normally" });
 });
 
 app.post("/send_email", (request, response) => {
     console.time("elapsedTimeSendEmail");
-    console.log("Received post request");
 
     // Data check
     emailSend(request.body, response);
 
-    console.log("Finished post request");
     console.timeEnd("elapsedTimeSendEmail");
 });
 
@@ -38,13 +41,21 @@ function emailSend(body, response) {
             return new EmailPublisher().sendEmail(response, emailInfo);
         }
 
-        console.error({ errorMessages: emailInfo.errorMessages });
         response.status(500);
+        console.error({
+            errorMessage: emailInfo.errorMessages,
+            status: response.statusCode,
+        });
+
         response.send({ errorMessages: emailInfo.errorMessages });
     } catch (error) {
-        console.error("Error ", error.message);
         // Returns error on JSON response
         response.status(400);
+        console.error({
+            errorMessage: error.message,
+            status: response.statusCode,
+        });
+
         response.send({ errorMessage: error.message });
         return;
     }
