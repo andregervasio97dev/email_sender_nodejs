@@ -4,6 +4,7 @@ module.exports = class EmailPublisher {
     transporter = nodemailer.createTransport({
         host: process.env.HOST,
         port: process.env.SMTP_PORT,
+        name: process.env.SMTP_NAME,
         secure: false,
         auth: {
             user: process.env.USER,

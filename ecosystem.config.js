@@ -13,6 +13,7 @@ module.exports = {
                 PASS: "secret.1",
                 HOST: "localhost",
                 SMTP_PORT: 1025,
+                SMTP_NAME: "teste@teste.com",
                 DEFAULT_FROM: "teste@teste.com",
                 DEFAULT_TO: "teste@teste.com",
                 DEFAULT_CC: "teste@teste.com",
